@@ -6,9 +6,7 @@ import time
 
 def fetch_weather(api_key, location):
     url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric"
-    
     response = requests.get(url)
-    
     if response.status_code == 200:
         data = response.json()
         weather = {
@@ -35,7 +33,6 @@ def process_weather_data(q, csv_writer, lock):
             print(f"Pressure: {weather_data['pressure']} hPa")
             print(f"Wind Speed: {weather_data['wind_speed']} m/s")
             print()
-
             with lock:
                 csv_writer.writerow(weather_data)
         else:
@@ -55,7 +52,6 @@ def main():
     q = queue.Queue()
     lock = threading.Lock()
 
-    # Add states to the queue
     for state in states:
         q.put((state, api_key))
 
@@ -76,6 +72,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-

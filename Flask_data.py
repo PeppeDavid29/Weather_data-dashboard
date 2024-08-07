@@ -9,10 +9,8 @@ import nest_asyncio
 nest_asyncio.apply()
 
 
-csv_file_path = r"C:\Users\sharo\weather_data.csv"
+csv_file_path = r"C:\Users\sharo\ordered_by_city.csv"
 weather_data = pd.read_csv(csv_file_path)
-
-
 state_coordinates = {
     'Kerala': [10.8505, 76.2711], 'Andhra Pradesh': [15.9129, 79.7400], 'Arunachal Pradesh': [28.2180, 94.7278],
     'Assam': [26.2006, 92.9376], 'Bihar': [25.0961, 85.3131], 'Chhattisgarh': [21.2787, 81.8661],
@@ -83,4 +81,4 @@ def update_map(selected_parameter):
     return fig
 
 if __name__ == '__main__':
-    app.run_server(mode='inline', host='127.0.0.1', port=8050)
+    app.run_server(host='127.0.0.1', port=8050)
