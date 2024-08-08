@@ -62,3 +62,10 @@ host = 'localhost'
 port = '5432'
 
 setup_database_and_insert_data(dbname, user, password, host, port, csv_directory)
+# Weather_data_transform.py
+
+def transform_data(data):
+    # Your transformation logic here
+    transformed_data = data  # Example logic, replace with actual transformation code
+    return transformed_data
+
