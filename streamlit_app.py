@@ -3,8 +3,12 @@ import pandas as pd
 import psycopg2
 
 from Weather_Api import fetch_weather
-from Weather_data_injection import inject_data
+from utils import inject_data
+from Weather_Api import fetch_weather_data
 from Weather_data_transform import transform_data
+
+# Your Streamlit app code here
+
 
 # Sample data
 data = {"city": "New York", "temperature": 75}  # Replace with actual data
