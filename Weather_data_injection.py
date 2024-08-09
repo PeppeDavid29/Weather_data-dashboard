@@ -1,6 +1,8 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col
-from Weather_data_injection import inject_data  # Ensure this is correct
+from Weather_data_injection import inject_data
+
+
+def inject_data(data):
 
 spark = SparkSession.builder \
     .appName("WeatherDataProcessing") \
