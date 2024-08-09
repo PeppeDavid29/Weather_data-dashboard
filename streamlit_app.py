@@ -17,7 +17,7 @@ port = '5432'
   return conn
 
 # Fetch Weather Data
-if st.button('Fetch Weather Data'):
+if st.button('Fetch Weather'):
     weather_data = fetch_weather_data()
     st.write("Weather Data Fetched")
 
