@@ -1,6 +1,7 @@
 from Weather_Api import fetch_weather
 from Weather_data_injection import process_weather_data
 from Weather_data_transform import store_weather_data
+import pandas as pd
 
 def main():
     api_key = '1958bf82f3cb9ccc4a2994e1e1b11b65'
@@ -9,7 +10,7 @@ def main():
         'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 
         'Jharkhand', 'Karnataka', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 
         'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 
-        'Sikkim', 'Tamil Nadu', 'Hyderabad', 'Tripura', 'Uttar Pradesh'
+        'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh'
     ]
 
     db_config = {
@@ -21,17 +22,28 @@ def main():
     }
 
     for state in states:
-        api_url = f"http://api.openweathermap.org/data/2.5/weather?q={state}&appid={api_key}&units=metric"
-        
-        # Fetch weather data
-        weather_data = fetch_weather(api_url, api_key)
-        
-        # Process the weather data
-        processed_df = process_weather_data(weather_data)
-        
-        # Store the processed data in the database
-        store_weather_data(processed_df, db_config)
+        try:
+            # Fetch weather data
+            weather_data = fetch_weather(api_key, state)
+            if weather_data is None:
+                print(f"Weather data for {state} is None, skipping...")
+                continue
+            
+            # Convert the dictionary to a Pandas DataFrame
+            weather_df = pd.DataFrame([weather_data])
+            
+            # Process the weather data
+            processed_df = process_weather_data(weather_df)
+            if processed_df is None or processed_df.empty:
+                print(f"Processed DataFrame for {state} is None or empty, skipping...")
+                continue
+
+            # Store the processed data in the database
+            store_weather_data(processed_df, db_config)
+            print(f"Data for {state} inserted successfully.")
+
+        except Exception as e:
+            print(f"An error occurred while processing {state}: {e}")
 
 if __name__ == "__main__":
     main()
-

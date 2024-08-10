@@ -1,16 +1,18 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
+import pandas as pd
 
-def process_weather_data(weather_data):
-    if weather_data is None:
+def process_weather_data(weather_df):
+    if weather_df is None:
         print("Error: The DataFrame is None. Please check the input data.")
         return None
 
-    # Print the schema to ensure the 'location' column exists
-    weather_data.printSchema()
+    # Display the first few rows to verify the DataFrame (Pandas equivalent of Spark's printSchema)
+    print("Processing Pandas DataFrame:")
+    print(weather_df.head())
     
     # Filter out rows where the 'location' column is null
-    processed_df = weather_data.filter(col("location").isNotNull())
+    processed_df = weather_df[weather_df['location'].notnull()]
     return processed_df
 
 # Initialize Spark Session
