@@ -23,22 +23,22 @@ def main():
 
     for state in states:
         try:
-            # Fetch weather data
+    
             weather_data = fetch_weather(api_key, state)
             if weather_data is None:
                 print(f"Weather data for {state} is None, skipping...")
                 continue
             
-            # Convert the dictionary to a Pandas DataFrame
+           
             weather_df = pd.DataFrame([weather_data])
             
-            # Process the weather data
+           
             processed_df = process_weather_data(weather_df)
             if processed_df is None or processed_df.empty:
                 print(f"Processed DataFrame for {state} is None or empty, skipping...")
                 continue
 
-            # Store the processed data in the database
+            
             store_weather_data(processed_df, db_config)
             print(f"Data for {state} inserted successfully.")
 

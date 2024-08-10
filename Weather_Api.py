@@ -55,7 +55,7 @@ def main():
     q = queue.Queue()
     lock = threading.Lock()
 
-    # Add states to the queue
+   
     for state in states:
         q.put((state, api_key))
 
